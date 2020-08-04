@@ -24,7 +24,6 @@ export default class extends React.Component {
                 data: { results: popular },
             } = await moviesApi.popular();
             this.setState({ nowPlaying, upcoming, popular });
-            console.log(nowPlaying);
         } catch {
             this.setState({
                 error: "영화 정보를 찾을 수 없습니다.",

@@ -11,11 +11,21 @@ export default class extends React.Component {
         loading: false,
     };
 
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        event.preventDefault();
         const { searchTerm } = this.state;
         if (searchTerm !== "") {
             this.searchByTerm();
         }
+    };
+
+    updateTerm = (event) => {
+        const {
+            target: { value },
+        } = event;
+        this.setState({
+            searchTerm: value,
+        });
     };
 
     searchByTerm = async () => {
@@ -28,11 +38,11 @@ export default class extends React.Component {
                 data: { results: movieResults },
             } = await moviesApi.search(searchTerm);
             const {
-                data: { results: showResults },
+                data: { results: tvResults },
             } = await tvApi.search(searchTerm);
             this.setState({
                 movieResults,
-                showResults,
+                tvResults,
             });
         } catch {
             this.setState({ error: "결과를 찾을 수 없습니다." });
@@ -44,7 +54,13 @@ export default class extends React.Component {
     };
 
     render() {
-        const { movieResults, tvResults, searchTerm, error, loading } = this.state;
+        const {
+            movieResults,
+            tvResults,
+            searchTerm,
+            error,
+            loading,
+        } = this.state;
         return (
             <SearchPresenter
                 movieResults={movieResults}
@@ -53,6 +69,7 @@ export default class extends React.Component {
                 error={error}
                 loading={loading}
                 handleSubmit={this.handleSubmit}
+                updateTerm={this.updateTerm}
             />
         );
     }

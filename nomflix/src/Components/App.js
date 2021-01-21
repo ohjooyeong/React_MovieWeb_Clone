@@ -1,13 +1,13 @@
-import React from "react";
-import Router from "Components/Router";
-import GlobalStyles from "Components/GlobalStyles";
+import React, { Suspense } from "react";
+import Router from "./Router";
+import Header from "./Header";
 
 function App() {
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
+            <Header />
             <Router />
-            <GlobalStyles />
-        </>
+        </Suspense>
     );
 }
 
